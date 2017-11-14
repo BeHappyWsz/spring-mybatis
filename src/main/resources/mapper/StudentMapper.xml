@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wsz.mybatis.dao.StudentDao">
+    <resultMap id="baseMap" type="com.wsz.mybatis.domain.Student">
+        <result column="id"         property="id"/>
+        <result column="username"   property="username"/>
+        <result column="real_name"  property="realName"/>
+        <result column="age"         property="age"/>
+        <result column="des"        property="des"/>
+    </resultMap>
+
+    <sql id="baseSql">
+        id, username, real_name, age, des
+    </sql>
+
+    <select id="findAll" resultMap="baseMap">
+        select <include refid="baseSql"/>
+        from t_student
+    </select>
+
+    <select id="findOne" resultMap="baseMap" parameterType="int">
+        select <include refid="baseSql"/>
+        from t_student
+        where id = #{id}
+    </select>
+
+    <select id="findByUsername"  resultMap="baseMap" parameterType="string">
+        select <include refid="baseSql"/>
+        from t_student
+        where username = #{username}
+    </select>
+
+    <select id="findByRealname" resultMap="baseMap" parameterType="string">
+        select <include refid="baseSql"/>
+        from t_student
+        where real_name like  concat('%',#{realname},'%')
+    </select>
+
+    <insert id="saveStudent" parameterType="com.wsz.mybatis.domain.Student" useGeneratedKeys="true" keyColumn="id">
+        insert into t_student(id, username, real_name, age, des)
+        values
+          (#{id},#{username},#{realName},#{age},#{des})
+    </insert>
+
+    <insert id="batchSaveStudent">
+        insert into t_student(id, username, real_name, age, des)
+        values
+          <foreach collection="students" item="item" index="key" open="(" separator="," close=")">
+              #{item.id},#{item.username},#{item.realName},#{item.age},#{item.des}
+          </foreach>
+    </insert>
+
+    <update id="updateStudent" parameterType="com.wsz.mybatis.domain.Student">
+        update t_student
+        set
+          <if test="username != null and username != ''">
+              username = #{username},
+          </if>
+          <if test="realName != null and realName != ''">
+              real_name = #{realName},
+          </if>
+          <if test="age != null and age != ''">
+              age = #{age},
+          </if>
+          <if test="des != null and des != ''">
+              des = #{des}
+          </if>
+        where
+          id = #{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+        delete
+        from t_student
+        where id = #{id}
+    </delete>
+
+    <delete id="batchDeleteStudent">
+        delete
+        from t_student
+        where id in
+            <foreach collection="ids" item="item" index="key" open="(" separator="," close=")">
+                #{item.id}
+            </foreach>
+    </delete>
+
+
+</mapper>
