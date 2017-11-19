@@ -30,10 +30,11 @@
         where username = #{username}
     </select>
 
-    <select id="findByRealname" resultMap="baseMap" parameterType="string">
+    <select id="findByRealname" resultMap="baseMap" parameterType="java.lang.String">
         select <include refid="baseSql"/>
         from t_student
-        where real_name like  concat('%',#{realname},'%')
+        where real_name
+          like concat('%',#{realname},'%')
     </select>
 
     <insert id="saveStudent" parameterType="com.wsz.mybatis.domain.Student" useGeneratedKeys="true" keyColumn="id">

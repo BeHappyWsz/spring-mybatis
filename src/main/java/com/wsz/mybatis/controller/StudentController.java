@@ -75,6 +75,8 @@ public class StudentController {
 
     @RequestMapping("searchStudent")
     public ModelAndView searchStudent(String realname){
+        Student username = studentService.findByUsername("123");
+        System.out.println(username.toString());
         ModelAndView model = new ModelAndView();
         List<Student> list =  studentService.findByRealname(realname);
         model.addObject("list",list);
