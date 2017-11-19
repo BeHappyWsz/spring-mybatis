@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author wsz
@@ -32,6 +33,11 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public Student findByUsername(String username) {
         return studentDao.findByUsername(username);
+    }
+
+    @Override
+    public void findByUname(Map<String, Object> map) {
+        studentDao.findByUname(map);
     }
 
     @Override

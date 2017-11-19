@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author wsz
@@ -20,6 +21,9 @@ public interface StudentDao {
     Student findOne(int id);
 
     Student findByUsername(String username);
+
+
+    void findByUname(Map<String,Object> map );
 
     List<Student> findByRealname(String realname);
 

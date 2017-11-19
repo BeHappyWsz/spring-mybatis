@@ -30,6 +30,18 @@
         where username = #{username}
     </select>
 
+    <parameterMap id="map1" type="java.util.Map">
+        <parameter property="uname" jdbcType="VARCHAR"  javaType="java.lang.String" mode="IN"/>
+        <parameter property="sid"  jdbcType="INTEGER"  javaType="java.lang.Integer" mode="OUT"/>
+        <parameter property="rname" jdbcType="VARCHAR"  javaType="java.lang.String" mode="OUT"/>
+    </parameterMap>
+    <select id="findByUname" parameterMap="map1" statementType="CALLABLE">
+        <![CDATA[
+          {call findByUname(?,?,?)}
+        ]]>
+    </select>
+
+
     <select id="findByRealname" resultMap="baseMap" parameterType="java.lang.String">
         select <include refid="baseSql"/>
         from t_student

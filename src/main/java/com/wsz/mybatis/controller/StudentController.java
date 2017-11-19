@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author wsz
@@ -29,6 +31,15 @@ public class StudentController {
         List<Student> students = studentService.findAll();
         model.addObject("list",students);
         model.setViewName(MODELPATH+"index");
+
+        Map<String, Object> map = new HashMap<String,Object>();
+        map.put("uname","1234");
+        map.put("sid",null);
+        map.put("rname","");
+        studentService.findByUname(map);
+        System.out.println(map.get("sid").toString()+"__"+map.get("rname"));
+
+
         return model;
     }
 
